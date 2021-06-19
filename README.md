@@ -1,2 +1,2 @@
 # baxter_roscpp_interface
-Baxter Research Robot C++ Interfaces
+C++ Interface Classes for control of the Baxter Research Robot from Rethink Robotics
