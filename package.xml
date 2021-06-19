@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>baxter_roscpp_interface</name>
+  <version>1.0.0</version>
+  <description>The baxter_roscpp_interface package</description>
+
+  <maintainer email="das.mahalingam@gmail.com">Dasharadhan Mahalingam</maintainer>
+
+  <license>TODO</license>
+
+  <author email="das.mahalingam@gmail.com">Dasharadhan Mahalingam</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>baxter_core_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  <build_export_depend>baxter_core_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>trajectory_msgs</build_export_depend>
+  <exec_depend>baxter_core_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>trajectory_msgs</exec_depend>
+</package>
