@@ -90,12 +90,12 @@ namespace baxter_interface
       /**
        * @brief   Left gripper control interface
        */
-      baxter_interface::Gripper l_gripper_;
+      //baxter_interface::Gripper l_gripper_;
 
       /**
        * @brief   Right gripper control interface
        */
-      baxter_interface::Gripper r_gripper_;
+      //baxter_interface::Gripper r_gripper_;
 
       /**
        * @brief   Current state of left gripper

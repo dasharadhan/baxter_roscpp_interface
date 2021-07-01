@@ -4,9 +4,7 @@ namespace baxter_interface
 {
 
 StateRecorder::StateRecorder(const ros::NodeHandle &n) :
-  node_handle_(n),
-  l_gripper_(n, "left"),
-  r_gripper_(n, "right")
+  node_handle_(n)
 {
   // Initialize joint names
   // Left arm joint names
@@ -63,18 +61,21 @@ StateRecorder::StateRecorder(const ros::NodeHandle &n) :
   l_gripper_state_ = -1.0;
   r_gripper_state_ = -1.0;
 
+  baxter_interface::Gripper l_gripper_interface(node_handle_, "left");
+  baxter_interface::Gripper r_gripper_interface(node_handle_, "right");
+
   // Calibrate grippers in case they are not calibrated
-  if(!l_gripper_.checkIfCalibrated())
+  if(!l_gripper_interface.checkIfCalibrated())
   {
-    if(!l_gripper_.calibrateGripper(true))
+    if(!l_gripper_interface.calibrateGripper(true))
     {
       init_failed_ = true;
     }
   }
 
-  if(!r_gripper_.checkIfCalibrated())
+  if(!r_gripper_interface.checkIfCalibrated())
   {
-    if(!r_gripper_.calibrateGripper(true))
+    if(!r_gripper_interface.calibrateGripper(true))
     {
       init_failed_ = true;
     }
