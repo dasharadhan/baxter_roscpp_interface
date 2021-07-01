@@ -68,6 +68,11 @@ namespace baxter_interface
       std::string log_file_path_;
 
       /**
+       * @brief   Time at which recording started
+       */
+      double start_time_;
+
+      /**
        * @brief   Flag set true when initialization fails
        */
       bool init_failed_;

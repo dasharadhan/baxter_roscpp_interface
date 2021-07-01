@@ -112,6 +112,8 @@ bool StateRecorder::startRecording(void)
     return false;
   }
 
+  start_time_ = ros::Time::now().toNSec();
+
   joint_states_sub_ = node_handle_.subscribe("/robot/joint_states", 1,
       &StateRecorder::jointStatesTopicCallback, this);
 
@@ -140,7 +142,7 @@ bool StateRecorder::stopRecording(void)
 void StateRecorder::jointStatesTopicCallback(const sensor_msgs::JointState &msg)
 {
   std::map<std::string, int>::iterator map_itr;
-  
+
   if(msg.name.size() > 6)
   {
     for(int itr = 0; itr < msg.name.size(); itr++)
@@ -153,6 +155,10 @@ void StateRecorder::jointStatesTopicCallback(const sensor_msgs::JointState &msg)
     }
 
     // Record robot states
+    // Time in nano seconds since start of recording
+    state_log_file_ << msg.header.stamp.toNSec() - start_time_;
+    state_log_file_ << ",";
+
     // Left arm state
     for(int itr = 0; itr < 7; itr++)
     {
