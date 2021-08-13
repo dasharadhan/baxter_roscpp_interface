@@ -230,7 +230,7 @@ baxter_interface::ErrorCodes baxter_interface::Limb::executeTrajectory(
     }
     
     setJointPositions(cmd_angles);
-    ROS_INFO_STREAM("Trajectory position : " << i);
+    //ROS_INFO_STREAM("Trajectory position : " << i);
     
     ros::Duration(0.001).sleep();
     
