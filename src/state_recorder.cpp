@@ -181,6 +181,11 @@ bool StateRecorder::stopRecording(void)
   return true;
 }
 
+std::string StateRecorder::getRecordingsDir(void)
+{
+  return (res_dir_ / "state_recordings").string() + "/";
+}
+
 void StateRecorder::jointStatesTopicCallback(const sensor_msgs::JointState &msg)
 {
   std::map<std::string, int>::iterator map_itr;

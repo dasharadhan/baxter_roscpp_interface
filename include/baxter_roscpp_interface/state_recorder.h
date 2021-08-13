@@ -46,6 +46,11 @@ namespace baxter_interface
        * @return  Retursn status of record stop request
        */
       bool stopRecording(void);
+      
+      /**
+       * @brief   To get the directory in which files are recorded
+       */
+      std::string getRecordingsDir(void);
 
     private:
 
