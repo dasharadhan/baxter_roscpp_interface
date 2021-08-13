@@ -141,7 +141,7 @@ bool StateRecorder::startRecording(std::string f_name)
   log_file_path_ = (res_dir_ / "state_recordings").string() + "/" + f_name;
 
   // Open log file
-  state_log_file_.open(log_file_path_, std::ofstream::out | std::ofstream::app);
+  state_log_file_.open(log_file_path_, std::ofstream::trunc);
 
   if(state_log_file_.is_open())
   {
