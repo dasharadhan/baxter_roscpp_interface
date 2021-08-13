@@ -36,6 +36,8 @@ baxter_interface::Gripper::Gripper(
 
   while(ros::Time::now() < end_time)
   {
+    ros::spinOnce();
+    
     if(state_.enabled == true)
     {
       init_failed_ = false;
@@ -43,11 +45,13 @@ baxter_interface::Gripper::Gripper(
     }
 
     ros::Duration(0.1).sleep();
+    
+    ROS_INFO_STREAM("Waiting for Gripper Initialization!");
   }
 
   if(init_failed_)
   {
-
+    ROS_INFO_STREAM("Gripper Initialization Failed!");
   }
 }
 
