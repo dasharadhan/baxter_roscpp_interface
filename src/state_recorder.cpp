@@ -128,6 +128,48 @@ bool StateRecorder::startRecording(void)
   return true;
 }
 
+bool StateRecorder::startRecording(std::string f_name)
+{ 
+
+  if(init_failed_)
+  {
+    ROS_WARN("Initialization failed!");
+    return false;
+  }
+
+  // Initialize log file name
+  log_file_path_ = (res_dir_ / "state_recordings").string() + "/" + f_name;
+
+  // Open log file
+  state_log_file_.open(log_file_path_, std::ofstream::out | std::ofstream::app);
+
+  if(state_log_file_.is_open())
+  {
+    ROS_INFO_STREAM("Recording robot state to " << log_file_path_);
+  }
+  else
+  {
+    ROS_INFO_STREAM("Error opening file");
+    ROS_INFO_STREAM("Cannot create file " << log_file_path_);
+    return false;
+  }
+
+  start_time_ = ros::Time::now().toNSec();
+
+  joint_states_sub_ = node_handle_.subscribe("/robot/joint_states", 1,
+      &StateRecorder::jointStatesTopicCallback, this);
+
+  l_gripper_state_sub_ = node_handle_.subscribe(
+      "/robot/end_effector/left_gripper/state", 1,
+      &StateRecorder::leftEndEffectorStateTopicCallback, this);
+
+  r_gripper_state_sub_ = node_handle_.subscribe(
+      "/robot/end_effector/right_gripper/state", 1,
+      &StateRecorder::rightEndEffectorStateTopicCallback, this);
+
+  return true;
+}
+
 bool StateRecorder::stopRecording(void)
 {
   joint_states_sub_.shutdown();

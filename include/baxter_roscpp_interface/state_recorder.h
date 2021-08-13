@@ -30,6 +30,15 @@ namespace baxter_interface
        * @return  Returns status of record start request
        */
       bool startRecording(void);
+      
+      /**
+       * @brief   Starts recording the robot state for the corresponding limb
+       *
+       * @param   f_name      Name of log file
+       *
+       * @return  Returns status of record start request
+       */
+      bool startRecording(std::string f_name);
 
       /**
        * @brief   Stops recording the joint angles for the corresponding limb
