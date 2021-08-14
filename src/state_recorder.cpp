@@ -70,6 +70,7 @@ StateRecorder::StateRecorder(const ros::NodeHandle &n) :
     if(!l_gripper_interface.calibrateGripper(true))
     {
       init_failed_ = true;
+      ROS_WARN("Left Gripper Initialization Failed!");
     }
   }
 
@@ -78,7 +79,17 @@ StateRecorder::StateRecorder(const ros::NodeHandle &n) :
     if(!r_gripper_interface.calibrateGripper(true))
     {
       init_failed_ = true;
+      ROS_WARN("Right Gripper Initialization Failed!");
     }
+  }
+  
+  if(init_failed_)
+  {
+    ROS_WARN("State Recorder Initialization failed!");
+  }
+  else
+  {
+    ROS_INFO("State Recorder Successfully Initialized!");
   }
 }
 
@@ -89,7 +100,7 @@ bool StateRecorder::startRecording(void)
 
   if(init_failed_)
   {
-    ROS_WARN("Initialization failed!");
+    ROS_WARN("State Recorder Initialization failed!");
     return false;
   }
 
@@ -154,11 +165,6 @@ bool StateRecorder::startRecording(std::string f_name)
     return false;
   }
 
-  start_time_ = ros::Time::now().toNSec();
-
-  joint_states_sub_ = node_handle_.subscribe("/robot/joint_states", 1,
-      &StateRecorder::jointStatesTopicCallback, this);
-
   l_gripper_state_sub_ = node_handle_.subscribe(
       "/robot/end_effector/left_gripper/state", 1,
       &StateRecorder::leftEndEffectorStateTopicCallback, this);
@@ -166,6 +172,16 @@ bool StateRecorder::startRecording(std::string f_name)
   r_gripper_state_sub_ = node_handle_.subscribe(
       "/robot/end_effector/right_gripper/state", 1,
       &StateRecorder::rightEndEffectorStateTopicCallback, this);
+
+  // Introduce delay so that gripper states have been received
+  ros::Duration(0.5).sleep();
+
+  start_time_ = ros::Time::now().toNSec();
+
+  joint_states_sub_ = node_handle_.subscribe("/robot/joint_states", 1,
+      &StateRecorder::jointStatesTopicCallback, this);
+      
+  ROS_INFO("Robot State Recorder Started!");
 
   return true;
 }
