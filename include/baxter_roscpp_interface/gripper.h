@@ -61,6 +61,19 @@ namespace baxter_interface
                             complete
       */
       bool calibrateGripper(bool block, double timeout = 5);
+      
+      /*
+        \brief  Returns current gripper position
+      */
+      double getGripperPosition(void);
+      
+      /*
+        \brief  Returns false gripper is open or true if close
+        
+        \param  pos_threshold   Gripper position below which the gripper is 
+                                considered to be closed
+      */
+      bool isGripperClosed(double close_threshold = 15);
 
       /*
         \brief  Closes the gripper jaws till object is grasped

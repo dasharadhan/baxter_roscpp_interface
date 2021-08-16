@@ -199,6 +199,23 @@ bool baxter_interface::Gripper::calibrateGripper(bool block, double timeout)
   return false;
 }
 
+double baxter_interface::Gripper::getGripperPosition(void)
+{
+  return state_.position;
+}
+
+bool baxter_interface::Gripper::isGripperClosed(double close_threshold)
+{
+  if(state_.position <= close_threshold)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 bool baxter_interface::Gripper::closeGripper(bool block, double timeout)
 {
   if(prop_.ui_type != baxter_core_msgs::EndEffectorProperties::ELECTRIC_GRIPPER)
