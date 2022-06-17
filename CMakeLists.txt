@@ -29,11 +29,10 @@ find_package(Boost REQUIRED COMPONENTS system)
 ###################################
 ## catkin specific configuration ##
 ###################################
-## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
+
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES baxter_roscpp_interface
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS baxter_core_msgs roscpp rospy std_msgs trajectory_msgs
   DEPENDS Boost
 )
@@ -42,20 +41,17 @@ catkin_package(
 ## Build ##
 ###########
 
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  ${BAXTER_INTERFACE_INCLUDE_DIR}
-)
-
-## Declare a C++ library
 add_library(${PROJECT_NAME}
   src/limb.cpp
   src/gripper.cpp
   src/state_recorder.cpp
 )
+target_include_directories(${PROJECT_NAME} PUBLIC include ${catkin_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-add_executable(baxter_state_recorder_test src/state_recorder_test.cpp)
-target_link_libraries(baxter_state_recorder_test ${catkin_LIBRARIES} ${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
