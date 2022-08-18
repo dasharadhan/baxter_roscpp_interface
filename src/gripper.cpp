@@ -143,6 +143,9 @@ bool baxter_interface::Gripper::resetGripper(bool block, double timeout)
 bool baxter_interface::Gripper::calibrateGripper(bool block, double timeout)
 {
   bool op_success = false;
+  std::string debug_msg = "Calibrating \"" + gripper_side_ + "\" Gripper";
+
+  ROS_INFO_STREAM(debug_msg);
 
   if(prop_.ui_type == baxter_core_msgs::EndEffectorProperties::ELECTRIC_GRIPPER)
   {
@@ -168,6 +171,8 @@ bool baxter_interface::Gripper::calibrateGripper(bool block, double timeout)
 
     if(state_.error || (!state_.ready))
     {
+      debug_msg = "Error in \"" + gripper_side_ + "\" Gripper calibration";
+      ROS_ERROR_STREAM(debug_msg);
       return false;
     }
       
@@ -186,16 +191,26 @@ bool baxter_interface::Gripper::calibrateGripper(bool block, double timeout)
 
       while(ros::Time::now() <= end_time)
       {
-        if(state_.calibrated && state_.ready)
+        if((state_.calibrated == state_.STATE_TRUE) && state_.ready)
         {
+          debug_msg = "\"" + gripper_side_ + "\" Gripper calibrated";
+          ROS_INFO_STREAM(debug_msg);
           return true;
         }
 
+        ROS_INFO_STREAM("state_.calibrated = " << +state_.calibrated);
+        ROS_INFO_STREAM("state_.ready = " << +state_.ready);
+
         ros::Duration(0.1).sleep();
       }
+
+      debug_msg = "\"" + gripper_side_ + "\" Gripper calibration timeout";
+      ROS_ERROR_STREAM(debug_msg);
     }
   }
 
+  debug_msg = "Check " + gripper_side_ + " Gripper";
+  ROS_ERROR_STREAM(debug_msg);
   return false;
 }
 
