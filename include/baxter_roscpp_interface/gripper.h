@@ -40,7 +40,7 @@ namespace baxter_interface
         \param  timeout     Maximum allowed time to wait for the process to 
                             complete
       */
-      bool clearCalibration(bool block, double timeout = 5);
+      bool clearCalibration(bool block, double timeout = 15);
 
       /*
         \brief  Resets the gripper
@@ -50,7 +50,7 @@ namespace baxter_interface
         \param  timeout     Maximum allowed time to wait for the process to 
                             complete
       */
-      bool resetGripper(bool block, double timeout = 5);
+      bool resetGripper(bool block, double timeout = 15);
 
       /*
         \brief  Performs gripper calibration
@@ -60,7 +60,7 @@ namespace baxter_interface
         \param  timeout     Maximum allowed time to wait for the process to 
                             complete
       */
-      bool calibrateGripper(bool block, double timeout = 5);
+      bool calibrateGripper(bool block, double timeout = 15);
       
       /*
         \brief  Returns current gripper position
